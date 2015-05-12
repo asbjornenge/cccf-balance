@@ -20,21 +20,28 @@ balance.diff(hosts, current_container_with_host, wanted_containers)
 // => { add : [], keep : [], remove : [] } evenly distributed via leastBusyHost
 
 balance(hosts, containers, {
-    balancer : function(hosts, containers) {
+    balancer : function(hosts, allocated_containers, current_container) {
         // magic
+        return selected_host
     }
 })
 // => [..containers w/host..] distributed to your liking 
 ```
 
-Passing a custom balancer works with both Basic and Diff. I plan to add more balancer functions in the future.
+By default this module will evenly distribute containers with no regard to host capabilities or container requirements.
+
+### Custom Balancer
+
+If you need a more sophisticated balancer, you can pass a custom balancer function.
+The balancer function will be called once for each unbalanced container, and should return the **host** to be used for **current_container**. 
+Passing a custom balancer works with both Basic and Diff.
 
 ### Options
 
 ```js
 {
-    balancer : function(hosts, containers) {}, // Custom balancer function [OPTIONAL]
-    ignore   : []                              // List of containers to ignore
+    balancer : function(...) {}, // Custom balancer function (see above) [OPTIONAL]
+    ignore   : []                // List of containers to ignore         [OPTIONAL]
 }
 ```
 

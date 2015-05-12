@@ -3,8 +3,8 @@ var balance = require('../index')
 var utils   = require('../utils')
 
 var hosts = [
-    { host : '127.0.0.1', port : 4243 },
-    { host : '127.0.0.2', port : 4243 }
+    { id : 'a', host : '127.0.0.1', port : 4243 },
+    { id : 'b', host : '127.0.0.2', port : 4243 }
 ]
 var current_containers = [        
     { id : 'api',         image : 'my-api:1.3.0',        host : hosts[0] },

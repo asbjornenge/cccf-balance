@@ -30,15 +30,19 @@ var utils = {
         return containers
     },
 
-    leastBusyHost : function(runningContainers, hosts) {
-        var weights = runningContainers.reduce(function(map, container) {
-            if (!map[container.host]) map[container.host] = 1
-            else map[container.host] += 1
+    uniqifyObject : function(obj) {
+        return JSON.stringify(obj).split('').sort().join('')
+    },
+
+    leastBusyHost : function(hosts, balanced) {
+        var weights = balanced.reduce(function(map, container) {
+            if (!map[container.host.id]) map[container.host.id] = 1
+            else map[container.host.id] += 1
             return map
         },{})
         return hosts.reduce(function(curr, next) {
-            var curr_weight = weights[curr.name] || 0
-            var next_weight = weights[next.name] || 0
+            var curr_weight = weights[curr.id] || 0
+            var next_weight = weights[next.id] || 0
             return (next_weight > curr_weight) ? curr : next
         }, hosts[0])
     }
