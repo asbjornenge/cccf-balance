@@ -1,5 +1,8 @@
-var cccf    = require('cccf')
-var clone   = require('clone')
+var _     = require('lodash')
+var clone = require('clone')
+var cccf  = require('cccf')
+var scale = require('cccf-scale')
+var utils = require('./utils')
 
 var utils = {
 
@@ -12,6 +15,19 @@ var utils = {
         return current_containers.filter(function(c) {
             return c.id == id
         })[0]
+    },
+
+    unifyContainers : function(containers, containers_ignore) { 
+        if (containers_ignore)
+            containers.filter(function(c) { return containers_ignore.indexOf(c.id) })
+        containers = containers.filter(utils.validateContainer)
+        containers = scale.up(containers)
+        containers = containers.map(function(container) {
+            var c = _.omit(container, ['host','scale'])
+            if (c.image.indexOf(':') < 0) c.image = c.image+':latest'
+            return c
+        })
+        return containers
     },
 
     leastBusyHost : function(runningContainers, hosts) {
