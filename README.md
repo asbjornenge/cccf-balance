@@ -41,7 +41,8 @@ Passing a custom balancer works with both Basic and Diff.
 ```js
 {
     balancer : function(...) {}, // Custom balancer function (see above) [OPTIONAL]
-    ignore   : []                // List of containers to ignore         [OPTIONAL]
+    ignore   : [],               // List of containers to ignore         [OPTIONAL]
+    omit     : []                // List of container properties to omit [OPTIONAL]
 }
 ```
 

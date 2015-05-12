@@ -1,4 +1,5 @@
 var assert  = require('assert')
+var clone   = require('clone')
 var balance = require('../index')
 var utils   = require('../utils')
 
@@ -32,7 +33,7 @@ it('can apply', function() {
         assert(c.host)
     })
     var _hostmap = hostmap(balanced)
-    assert(hostmap.a == hostmap.b)
+    assert(_hostmap.a == _hostmap.b)
 })
 
 it('can diff', function() {
@@ -45,4 +46,28 @@ it('can diff', function() {
     assert(diff.remove.map(ids).filter(contains(['es'])).length == 1)
     var _hostmap = hostmap(diff.add.concat(diff.keep))
     assert(_hostmap.a == _hostmap.b)
+})
+
+it('can take a custom balancer', function() {
+    var balancer = function(hosts, balanced, current) {
+        return hosts[0]
+    }
+    var balanced = balance(hosts, wanted_containers, { balancer : balancer })
+    assert(balanced.length == 6)
+    balanced.forEach(function(c) {
+        assert(c.host == hosts[0])
+    })
+})
+
+it('can ignore containers', function() {
+    var balanced = balance(hosts, wanted_containers, { ignore : ['api'] })
+    assert(balanced.length == 2) 
+})
+
+it('can omit properties', function() {
+    var wanted = clone(wanted_containers).map(function(c) { c.mem = '1g'; return c })
+    var balanced = balance(hosts, wanted)
+    balanced.forEach(function(c) { assert(c.mem) })
+    var balanced_omit = balance(hosts, wanted, { omit : ['mem'] })
+    balanced_omit.forEach(function(c) { assert(!c.mem) })
 })

@@ -17,13 +17,13 @@ var utils = {
         })[0]
     },
 
-    unifyContainers : function(containers, containers_ignore) { 
+    unifyContainers : function(containers, containers_ignore, properties_omit) { 
         if (containers_ignore)
-            containers.filter(function(c) { return containers_ignore.indexOf(c.id) })
+            containers = containers.filter(function(c) { return containers_ignore.indexOf(c.id) })
         containers = containers.filter(utils.validateContainer)
         containers = scale.up(containers)
         containers = containers.map(function(container) {
-            var c = _.omit(container, ['host','scale'])
+            var c = _.omit(container, ['host','scale'].concat(properties_omit || []))
             if (c.image.indexOf(':') < 0) c.image = c.image+':latest'
             return c
         })
