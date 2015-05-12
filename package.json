@@ -1,0 +1,34 @@
+{
+  "name": "cccf-balance",
+  "version": "1.0.0",
+  "description": "Balance containers (cccf format) across hosts",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha -R nyan -w --check-leaks"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asbjornenge/cccf-balance.git"
+  },
+  "keywords": [
+    "cccf",
+    "containers",
+    "container-scheduling"
+  ],
+  "author": "Asbjorn Enge <asbjorn@hanafjedle.net>",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/asbjornenge/cccf-balance/issues"
+  },
+  "homepage": "https://github.com/asbjornenge/cccf-balance#readme",
+  "dependencies": {
+    "cccf": "^3.2.1",
+    "cccf-diff": "^3.0.2",
+    "cccf-scale": "^2.0.0",
+    "clone": "^1.0.2",
+    "lodash": "^3.8.0"
+  }
+}
