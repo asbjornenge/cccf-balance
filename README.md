@@ -10,6 +10,8 @@ npm install --save cccf-balance
 
 ## Use
 
+By default this module will evenly distribute containers with no regard to host capabilities or container requirements.
+
 ```js
 var balance = require('cccf-balance')
 
@@ -27,8 +29,6 @@ balance(hosts, containers, {
 })
 // => [..containers w/host..] distributed to your liking 
 ```
-
-By default this module will evenly distribute containers with no regard to host capabilities or container requirements.
 
 ### Custom Balancer
 
