@@ -4,6 +4,8 @@ var utils   = require('./utils')
 
 module.exports = function(hosts, containers, opts) {
     opts = opts || {}
+    var unified_containers = utils.unifyContainers(containers, opts.ignore)
+    return balance(hosts, [], { add : unified_containers, remove : [], keep : [] }, opts.balancer).add
 }
 
 module.exports.diff = function(hosts, current_containers, wanted_containers, opts) {
