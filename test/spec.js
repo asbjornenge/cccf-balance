@@ -17,19 +17,19 @@ var wanted_containers = [
     { id : 'pg',  image : 'postgresql:3.0.0' }
 ]
 
-// Can apply
+function ids(container) { return container.id  }
+function contains(list) { return function(x) { return list.indexOf(x) >= 0 } }
+
+// MISSING: Can apply
 
 it('can diff', function() {
     var diff = balance.diff(hosts, current_containers, wanted_containers)
-    Object.keys(diff).forEach(function(diff_key) {
-        diff[diff_key].forEach(function(container) {
-            // diff should ignore hosts
-            assert(!container.host)
-        })
-    })
     assert(diff.add.length == 3)
+    assert(diff.add.map(ids).filter(contains(['api-scale-2','es','pg'])).length == 3)
     assert(diff.keep.length == 2)
+    assert(diff.keep.map(ids).filter(contains(['api','api-scale-1'])).length == 2)
     assert(diff.remove.length == 1)
+    assert(diff.remove.map(ids).filter(contains(['es'])).length == 1)
 })
 
 
